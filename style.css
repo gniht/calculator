@@ -1,0 +1,13 @@
+.bezel {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-gap: 1em;
+}
+
+.number {
+  background-color: blanchedalmond;
+}
+
+.key:hover {
+  background-color: rgb(248, 190, 104);
+}
