@@ -34,6 +34,8 @@ bezel.addEventListener('click', (e) => {
 */
 
 function applyInput(key){
+  let num = parseFloat(current); 
+
   if( key.classList.contains('undo') ){
     if(fallbackValues.length >= 1){
       let temp = fallbackValues.pop();
@@ -95,12 +97,13 @@ function applyInput(key){
   if( key.textContent === '=' && lastTypeEntered === 'operator' ){
     alert('The last entry must be a valid operand to proceed.');
   }
-  if( key.classList.contains('negate') ){
-    let num = parseFloat(current);
-    if( num ){
-      current = '' + (-1*num);
-      currentEntry.textContent = current;      
-    }    
+  if( key.classList.contains('negate') && num ){        
+    current = '' + (-1*num);
+    currentEntry.textContent = current;        
+  }
+  if( key.classList.contains('inverse') && num && num !== 0){
+    current = '' + (1/num);
+    currentEntry.textContent = current;   
   }  
 }
 
