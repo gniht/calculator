@@ -44,9 +44,6 @@ function applyInput(key){
       previouslyEntered.textContent = previously.join(' ');
       currentEntry.textContent = current;
     }
-
-  }else if( key.classList.contains('equals') ){
-    // calculate stuff
   }else{    
     fallbackValues.push([[...previously], current, lastTypeEntered, openParens]);
   }    
@@ -63,7 +60,15 @@ function applyInput(key){
   }else if( key.textContent === '(' && openParens ){
     alert('Nested parenthesis not supported.');
   }
-  if( key.classList.contains('operator') && lastTypeEntered !== 'operator'){    
+  if( key.textContent === ')' && openParens ){
+    openParens = false;
+    previously.push(current);
+    previously.push(key.textContent);
+    fallbackValues.push([[...previously], current, lastTypeEntered, openParens]);
+    previouslyEntered.textContent = previously.join(' ');
+    current = '';
+  }
+  if( key.classList.contains('operator') && lastTypeEntered !== 'operator' && lastTypeEntered){    
     previously.push(current);
     previously.push(key.textContent);
     previouslyEntered.textContent = previously.join(' ');
@@ -89,6 +94,13 @@ function applyInput(key){
   }
   if( key.textContent === '=' && lastTypeEntered === 'operator' ){
     alert('The last entry must be a valid operand to proceed.');
+  }
+  if( key.classList.contains('negate') ){
+    let num = parseFloat(current);
+    if( num ){
+      current = '' + (-1*num);
+      currentEntry.textContent = current;      
+    }    
   }  
 }
 
