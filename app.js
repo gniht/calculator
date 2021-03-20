@@ -34,26 +34,25 @@ bezel.addEventListener('click', (e) => {
 */
 
 function applyInput(key){
-  let num = parseFloat(current); 
+  let num = parseFloat(current);  
 
-  if( key.classList.contains('undo') ){
-    if(fallbackValues.length >= 1){
-      let temp = fallbackValues.pop();
-      current = temp[1];      
-      previously = temp[0];
-      lastTypeEntered = temp[2];
-      console.log('previously: '+ temp[0] + ' || current: ' + temp[1]);
-      previouslyEntered.textContent = previously.join(' ');
-      currentEntry.textContent = current;
-    }
-  }else{    
+  if( key.classList.contains('undo') && fallbackValues.length >= 1 ){    
+    let temp = fallbackValues.pop();
+    current = temp[1];      
+    previously = temp[0];
+    lastTypeEntered = temp[2];
+    openParens = temp[3];
+    console.log('previously: '+ temp[0] + ' || current: ' + temp[1]);
+    previouslyEntered.textContent = previously.join(' ');
+    currentEntry.textContent = current;    
+  }else{
     fallbackValues.push([[...previously], current, lastTypeEntered, openParens]);
-  }    
+  }     
      
   if( key.classList.contains('number') || key.textContent === '.' ){
     current += key.textContent;
     currentEntry.textContent = current;    
-    lastTypeEntered = 'input';
+    lastTypeEntered = 'input';    
   }
   if( key.textContent === '(' && !openParens ){
     openParens = true;
@@ -65,8 +64,7 @@ function applyInput(key){
   if( key.textContent === ')' && openParens ){
     openParens = false;
     previously.push(current);
-    previously.push(key.textContent);
-    fallbackValues.push([[...previously], current, lastTypeEntered, openParens]);
+    previously.push(key.textContent);    
     previouslyEntered.textContent = previously.join(' ');
     current = '';
   }
