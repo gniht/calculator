@@ -75,7 +75,8 @@ function applyInput(key){
     previously.push(current);
     previouslyEntered.textContent = previously.join(' ');
     currentEntry.textContent = eval(previously.join(''));
-    current = '';
+    previously = [];    
+    current = currentEntry.textContent;    
     lastTypeEntered = 'equals';    
   }
   if( key.textContent === '=' && openParens ){
