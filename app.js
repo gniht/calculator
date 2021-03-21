@@ -97,8 +97,9 @@ function applyInput(key){
     current = '' + (num*num);
     currentEntry.textContent = current;
   }
-  if( key.classList.contains('sqrt') && num && num > 0 ){
-    if(num < 0){
+  if( key.classList.contains('sqrt') && num ){
+    
+    if( num < 0 ){
       alert('Cannot take sqrt of a negative number');
     }else{
       current = '' + Math.sqrt(num);
