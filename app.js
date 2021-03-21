@@ -63,10 +63,11 @@ function applyInput(key){
   }
   if( key.textContent === ')' && openParens ){
     openParens = false;
-    previously.push(current);
+    if(current){previously.push(current);}
     previously.push(key.textContent);    
     previouslyEntered.textContent = previously.join(' ');
     current = '';
+    currentEntry.textContent = current;
   }
   if( key.classList.contains('operator') && lastTypeEntered !== 'operator' && lastTypeEntered){    
     previously.push(current);
@@ -80,12 +81,13 @@ function applyInput(key){
     previouslyEntered.textContent = '';
     current = '';
     previously = [];
-    lastTypeEntered = 'clear';    
+    lastTypeEntered = 'clear';
+    openParens = false;    
   }
   if( key.textContent === '=' && !openParens && lastTypeEntered !== 'operator'){
     previously.push(current);
     previouslyEntered.textContent = previously.join(' ');
-    currentEntry.textContent = doTheMath(previously);
+    currentEntry.textContent = eval(previously.join(''));
     current = '';
     lastTypeEntered = 'equals';    
   }
@@ -105,7 +107,72 @@ function applyInput(key){
   }  
 }
 
-function doTheMath(strArr){
+/*
+function doTheMath(strArr){  
+  if(strArr.length === 1){
+    return strArr[0];
+  }
+  if(strArr.length === 3){
+    return doTheMath([operate(strArr)]);    
+  }
+  console.log('before: ' + strArr);  
   // parse the str, do the math
-  return 'some result';
+  // check for parens, process what's in them first
+  // since nested parens aren't supported, open and closed will be in pairs
+  let startParens = strArr.indexOf('(');
+  let endParens = strArr.indexOf(')');
+  
+  if( startParens >= 0 ){
+    let subArr = [];
+    for(let i = startParens+1; i < endParens; i++){
+      subArr.push(strArr[i]);
+    }
+    strArr.splice(startParens, endParens-startParens+1, doTheMath(subArr));    
+    doTheMath(strArr);
+  }
+  //multiply and divide  
+  let multIndex = strArr.indexOf('*');
+  let divIndex = strArr.indexOf('/');
+  let addIndex = strArr.indexOf('+');
+  let subtractIndex = strArr.indexOf('-');
+  let operationIndex;
+  while(multIndex >= 1 || divIndex >= 1){
+    if(multIndex >= 1 && divIndex >= 1){
+      operationIndex = Math.min(multIndex, divIndex);
+    }else if(divIndex < 0){
+      operationIndex = multIndex;
+    }else if(multIndex < 0){
+      operationIndex = divIndex;
+    }
+    strArr.splice(operationIndex-1, 3, doTheMath([
+      strArr[operationIndex-1],
+      strArr[operationIndex],
+      strArr[operationIndex+1]
+    ]));
+  }
+  console.log('after: ' + strArr); 
+
 }
+
+function operate(arr){
+  let a = parseFloat(arr[0]);
+  let b = parseFloat(arr[2]);
+  if( arr[1] === '*' ){
+    return a*b;
+  }
+  if( arr[1] === '/' ){
+    if( b === 0 ){
+      alert('To tally the magnitude of your error would take an eternity.');
+    }else{
+      return a/b;
+    }     
+  }
+  if( arr[1] === '+' ){
+    return a+b;
+  }
+  if( arr[1] === '-' ){
+    return a-b;
+  }
+}
+console.log('final: ' + doTheMath(['5', '*', '(', '3', '-', '2', ')', '+', '1']) );
+*/
