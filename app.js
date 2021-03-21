@@ -74,7 +74,7 @@ function applyInput(key){
   if( key.textContent === '=' && !openParens && lastTypeEntered !== 'operator'){
     previously.push(current);
     previouslyEntered.textContent = previously.join(' ');
-    currentEntry.textContent = eval(previously.join(''));
+    currentEntry.textContent = Number.parseFloat(eval(previously.join(''))).toFixed(6);
     previously = [];    
     current = currentEntry.textContent;    
     lastTypeEntered = 'equals';    
