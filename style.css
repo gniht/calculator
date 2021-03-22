@@ -50,6 +50,9 @@ body{
   text-align: center;
   padding: 5px;
 }
+button:focus {  
+  transition: background-color .5s .5s;  
+}
 .number {
   background-color: blanchedalmond;
 }
