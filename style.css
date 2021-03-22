@@ -26,6 +26,7 @@ body{
   grid-template-rows: 1fr 2fr;
 }
 .previouslyEntered {
+  height: 16px;
   padding: 10px 6px;
   text-align: right;
   grid-row: 1/2;
@@ -33,6 +34,7 @@ body{
   font-size: .8em;
 }
 .currentEntry {
+  height: 32px;
   word-wrap: break-word;
   overflow: auto;
   text-align: right;
