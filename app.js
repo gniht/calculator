@@ -79,8 +79,12 @@ function applyInput(key){
     if( result == Infinity || result == -Infinity ){
       alert('Invalid operation')
     }else if( result == resultInt ){
+      console.log(resultInt);
       currentEntry.textContent = resultInt;
     }else{
+      if(isNaN(result)){
+        return;                
+      }
       currentEntry.textContent = result;
     }    
     previously = [];    
