@@ -1,3 +1,5 @@
+//todo: fix strangeness when using parenthesis
+
 let currentEntry = document.querySelector('.currentEntry');
 let previouslyEntered = document.querySelector('.previouslyEntered');
 let bezel = document.querySelector('.bezel');
