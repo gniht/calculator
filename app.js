@@ -1,4 +1,5 @@
 //todo: fix strangeness when using parenthesis
+//todo: test todo
 
 let currentEntry = document.querySelector('.currentEntry');
 let previouslyEntered = document.querySelector('.previouslyEntered');
